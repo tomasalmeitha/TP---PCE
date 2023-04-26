@@ -120,11 +120,13 @@ public class GameStart {
 
         String genero = "";
         String jogo = "";
-
+        String[] jogoArray = new String[100];
+        int jogos = 0;
+        int i = 0;
 
         in.nextLine();
 
-        boolean found = false;
+        boolean jogoFound = false;
 
         while (in.hasNextLine()) {
             String linha = in.nextLine();
@@ -135,16 +137,39 @@ public class GameStart {
 
                 genero = itensDaLinha[6];
                 jogo = itensDaLinha[7];
-                String ultimoJogo = jogo;
-                System.out.println(genero);
-                System.out.println(jogo);
-                found = true;
+
+
+                for (i = 0; i < jogos; i++) {
+
+                    if (jogoArray[i].equals(jogo)) {
+                        jogoFound = true;
+                    }
                 }
+
+                if (!jogoFound) {
+                    System.out.println(genero);
+                    System.out.println(jogo);
+                    jogoArray[jogos] = jogo;
+                    jogos++;
+                }
+
+                    //jogoArray[i] = jogo;
+
+                    //if (!jogoArray[i].equals(jogoAntes)) {
+
+                        //System.out.println(genero);
+                        //System.out.println(jogoArray[i]);
+                        //jogoAntes = jogoArray[i];
+
+                    //}
+                }
+
 
             }
 
         in.close();
         }
+
 
 
 
