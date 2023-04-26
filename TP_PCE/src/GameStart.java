@@ -171,6 +171,13 @@ public class GameStart {
         }
 
 
+    public static void function6() throws FileNotFoundException {
+
+        
+
+
+    }
+
 
 
 
@@ -212,6 +219,7 @@ public class GameStart {
                     function5();
                 break;
                 case 6:
+                    function6();
                 break;
             }
             System.out.println("Deseja efetuar mais alguma operação?");
