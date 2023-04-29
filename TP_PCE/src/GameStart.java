@@ -7,11 +7,11 @@ public class GameStart {
 
     public static void function1() throws FileNotFoundException {
 
-        File Ficheiro = new File("src/GameStart.csv");
+        File Ficheiro = new File("src/GameStart_V2.txt");
         Scanner in = new Scanner(Ficheiro);
 
 
-        while (in.hasNextLine()){
+        while (in.hasNextLine()) {
             String linha = in.nextLine();
             System.out.println(linha);
         }
@@ -20,7 +20,7 @@ public class GameStart {
 
     public static void function2() throws FileNotFoundException {
 
-        File Ficheiro = new File("src/GameStart.csv");
+        File Ficheiro = new File("src/GameStart_V2.txt");
         Scanner in = new Scanner(Ficheiro);
 
         int countVendas = 0;
@@ -30,17 +30,17 @@ public class GameStart {
         in.nextLine();
 
 
-        while (in.hasNextLine()){
+        while (in.hasNextLine()) {
             String linha = in.nextLine();
             countVendas++;
 
-            String[] itensDaLinha = linha.split(";");
+            String[] itensDaLinha = linha.split(",");
             totalCadaVenda = Double.parseDouble(itensDaLinha[8]);
             totalVendas += totalCadaVenda;
 
         }
-        System.out.println("O número total de vendas é: "+countVendas);
-        System.out.println("O valor total de vendas é: " +totalVendas+ " €");
+        System.out.println("O número total de vendas é: " + countVendas);
+        System.out.println("O valor total de vendas é: " + totalVendas + " €");
         in.close();
     }
 
@@ -58,20 +58,20 @@ public class GameStart {
 
         while (in.hasNextLine()) {
             String linha = in.nextLine();
-            String[] itensDaLinha = linha.split(";");
+            String[] itensDaLinha = linha.split(",");
             totalCadaVenda = Double.parseDouble(itensDaLinha[8]);
             totalVendas += totalCadaVenda;
 
         }
         double lucro = 0.10 * totalVendas;
-        System.out.println("O total de lucro é: " +lucro+ " €");
+        System.out.println("O total de lucro é: " + lucro + " €");
         in.close();
     }
 
 
     public static void function4() throws FileNotFoundException {
 
-        File Ficheiro = new File("src/GameStart.csv");
+        File Ficheiro = new File("src/GameStart_V2.txt");
         Scanner in = new Scanner(Ficheiro);
 
         Scanner input = new Scanner(System.in);
@@ -84,13 +84,13 @@ public class GameStart {
         String email = "";
 
         in.nextLine();
-        
+
         while (in.hasNextLine()) {
             String linha = in.nextLine();
-            String[] itensDaLinha = linha.split(";");
+            String[] itensDaLinha = linha.split(",");
 
 
-            if(Integer.parseInt(itensDaLinha[1]) == idCliente){
+            if (Integer.parseInt(itensDaLinha[1]) == idCliente) {
 
                 name = itensDaLinha[2];
                 contacto = Integer.parseInt(itensDaLinha[3]);
@@ -110,27 +110,30 @@ public class GameStart {
 
     public static void function5() throws FileNotFoundException {
 
-        File Ficheiro = new File("src/GameStart.csv");
+        File Ficheiro = new File("src/GameStart_V2.txt");
         Scanner in = new Scanner(Ficheiro);
 
         Scanner input = new Scanner(System.in);
 
         System.out.println("Insira a editora que deseja consultar");
-        String editora = input.next();
+        String editora = input.nextLine();
 
         String genero = "";
         String jogo = "";
+        String cat = "";
         String[] jogoArray = new String[100];
+        String[] catArray = new String[100];
         int jogos = 0;
-        int i = 0;
+        int cats = 0;
 
         in.nextLine();
 
         boolean jogoFound = false;
+        boolean catFound = false;
 
         while (in.hasNextLine()) {
             String linha = in.nextLine();
-            String[] itensDaLinha = linha.split(";");
+            String[] itensDaLinha = linha.split(",");
 
 
             if (itensDaLinha[5].equals(editora)) {
@@ -138,46 +141,129 @@ public class GameStart {
                 genero = itensDaLinha[6];
                 jogo = itensDaLinha[7];
 
+                //for (int k = 0; k < cats; k++) {
 
-                for (i = 0; i < jogos; i++) {
+                catFound = false;
 
-                    if (jogoArray[i].equals(jogo)) {
-                        jogoFound = true;
+
+                if (catArray[cats] != null && catArray[cats].equals(genero)) {
+                    catFound = true;
                     }
+                //}
+
+                if(!catFound){
+                    System.out.println(genero);
+                    catArray[cats] = cat;
+                    cats++;
+
                 }
 
+                //for (int i = 0; i < jogos; i++) {
+
+                    if (jogoArray[jogos] != null && jogoArray[jogos].equals(jogo)) {
+                        jogoFound = true;
+                    }
+                //}
+
                 if (!jogoFound) {
-                    System.out.println(genero);
+                    //System.out.println(genero);
                     System.out.println(jogo);
                     jogoArray[jogos] = jogo;
                     jogos++;
                 }
 
-                    //jogoArray[i] = jogo;
+                //jogoArray[i] = jogo;
 
-                    //if (!jogoArray[i].equals(jogoAntes)) {
+                //if (!jogoArray[i].equals(jogoAntes)) {
 
-                        //System.out.println(genero);
-                        //System.out.println(jogoArray[i]);
-                        //jogoAntes = jogoArray[i];
+                //System.out.println(genero);
+                //System.out.println(jogoArray[i]);
+                //jogoAntes = jogoArray[i];
 
-                    //}
-                }
-
-
+                //}
             }
 
-        in.close();
+
         }
+
+        in.close();
+    }
 
 
     public static void function6() throws FileNotFoundException {
 
-        
+        File file = new File("src/GameStart_V2.txt");
+        Scanner in = new Scanner(file);
+
+        in.nextLine();
+        String[][] matriz = new String[100][9];
+        int j = 0;
+
+        while (in.hasNextLine()) {
+            String linha = in.nextLine();
+            String[] itensDaLinha = linha.split(",");
+
+            if (j >= matriz.length){
+                matriz = resizeMatriz(matriz);
+            }
+
+            matriz[j][0] = itensDaLinha[0];
+            matriz[j][1] = itensDaLinha[1];
+            matriz[j][2] = itensDaLinha[2];
+            matriz[j][3] = itensDaLinha[3];
+            matriz[j][4] = itensDaLinha[4];
+            matriz[j][5] = itensDaLinha[5];
+            matriz[j][6] = itensDaLinha[6];
+            matriz[j][7] = itensDaLinha[7];
+            matriz[j][8] = itensDaLinha[8];
+
+            j++;
 
 
+        }
+
+        double precoInicial = Double.parseDouble(matriz[0][8]);
+
+        double precoNovo = 0;
+
+        for (int w = 0; w < j; w++) {
+
+            precoNovo = Double.parseDouble(matriz[w][8]);
+
+            if (precoNovo >= precoInicial) {
+                precoInicial = precoNovo;
+            }
+
+        }
+
+        System.out.println(precoInicial + " €");
+
+
+        for (int k = 0; k < j; k++) {
+
+            double newPreco = Double.parseDouble(matriz[k][8]);
+            String nome = matriz[k][2];
+
+
+            if (newPreco == precoInicial) {
+                System.out.println(nome);
+            }
+
+        }
+
+        in.close();
     }
 
+    public static String[][] resizeMatriz(String[][] matriz){
+
+        String[][] newArray = new String[2 * matriz.length][9];
+
+        for (int i = 0; i < matriz.length; i++){
+            newArray[i] = matriz[i];
+        }
+        return newArray;
+
+    }
 
 
 
